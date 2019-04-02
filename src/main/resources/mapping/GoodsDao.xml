@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaosha.dao.GoodsDao">
+  <resultMap id="BaseResultMap" type="com.miaosha.model.Goods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="sub_title" jdbcType="VARCHAR" property="subTitle" />
+    <result column="original_cost" jdbcType="REAL" property="originalCost" />
+    <result column="current_price" jdbcType="REAL" property="currentPrice" />
+    <result column="discount" jdbcType="REAL" property="discount" />
+    <result column="is_free_delivery" jdbcType="INTEGER" property="isFreeDelivery" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    goods_id, title, sub_title, original_cost, current_price, discount, is_free_delivery, 
+    category_id, last_update_time
+  </sql>
+  <select id="findAll" resultType="integer">
+    SELECT
+      goods_id
+    FROM
+      t_goods
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <select id="findLast5M" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_goods
+    where last_update_time >= NOW() - INTERVAL 5 MINUTE
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="goods_id" keyProperty="goodsId" parameterType="com.miaosha.model.Goods" useGeneratedKeys="true">
+    insert into t_goods (title, sub_title, original_cost, 
+      current_price, discount, is_free_delivery, 
+      category_id, last_update_time)
+    values (#{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, #{originalCost,jdbcType=REAL}, 
+      #{currentPrice,jdbcType=REAL}, #{discount,jdbcType=REAL}, #{isFreeDelivery,jdbcType=INTEGER}, 
+      #{categoryId,jdbcType=INTEGER}, #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="goods_id" keyProperty="goodsId" parameterType="com.miaosha.model.Goods" useGeneratedKeys="true">
+    insert into t_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        title,
+      </if>
+      <if test="subTitle != null">
+        sub_title,
+      </if>
+      <if test="originalCost != null">
+        original_cost,
+      </if>
+      <if test="currentPrice != null">
+        current_price,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="isFreeDelivery != null">
+        is_free_delivery,
+      </if>
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="originalCost != null">
+        #{originalCost,jdbcType=REAL},
+      </if>
+      <if test="currentPrice != null">
+        #{currentPrice,jdbcType=REAL},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=REAL},
+      </if>
+      <if test="isFreeDelivery != null">
+        #{isFreeDelivery,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaosha.model.Goods">
+    update t_goods
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="originalCost != null">
+        original_cost = #{originalCost,jdbcType=REAL},
+      </if>
+      <if test="currentPrice != null">
+        current_price = #{currentPrice,jdbcType=REAL},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=REAL},
+      </if>
+      <if test="isFreeDelivery != null">
+        is_free_delivery = #{isFreeDelivery,jdbcType=INTEGER},
+      </if>
+      <if test="categoryId != null">
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaosha.model.Goods">
+    update t_goods
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      original_cost = #{originalCost,jdbcType=REAL},
+      current_price = #{currentPrice,jdbcType=REAL},
+      discount = #{discount,jdbcType=REAL},
+      is_free_delivery = #{isFreeDelivery,jdbcType=INTEGER},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>
