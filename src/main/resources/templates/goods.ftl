@@ -112,15 +112,15 @@
                         <tbody>
                         <#list params as p>
                             <tr>
-                                <td>${p.gpParamName!''}</td>
-                                <td>${p.gpParamValue!''}</td>
+                            <td>${p.gpParamName!''}</td>
+                            <td>${p.gpParamValue!''}</td>
                             </tr>
                         </#list>
                         </tbody>
                     </table>
                 </div>
-                <div class="layui-tab-item layui-col-xs8 layui-col-xs-offset2">
-                    <h2>用户评价道：实在是太好用了！</h2>
+                <div id="evaluate" class="layui-tab-item layui-col-xs8 layui-col-xs-offset2">
+
                 </div>
             </div>
         </div>
@@ -133,7 +133,16 @@
         var layer = layui.layer
             , form = layui.form;
         var $ = layui.$;
+        $.getJSON(`/evaluate/${goods.goodsId?string('0')}`, (result) => {
+            if (!result || !result.length) {
+                return;
+            }
 
+            for (let i = 0, len = result.length; i < len; i++) {
+                let $ev = $("<h2>用户评价道：" + result[i].content + "</h2>");
+                $("#evaluate").append($ev);
+            }
+        });
 
     }();
 </script>

@@ -21,4 +21,15 @@ public interface GoodsService {
     List<Goods> findLast5M();
 
     List<Evaluate> findEvaluateByGoodsId(Long goodsId);
+
+    /**
+     * 秒杀用。用户购买秒杀商品
+     * @param goodsId 商品id
+     * @param userId 用户id
+     * @param num 用户可抢购的商品数量
+     * @return
+     */
+    void purchaseGoods(Integer goodsId, String userId, Integer num);
+
+    String sendMsgToQueue(String userId);
 }

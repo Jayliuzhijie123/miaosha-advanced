@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.miaosha.dao.OrderDao">
+  <resultMap id="BaseResultMap" type="com.miaosha.model.Order">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="recv_name" jdbcType="VARCHAR" property="recvName" />
+    <result column="recv_address" jdbcType="VARCHAR" property="recvAddress" />
+    <result column="recv_mobile" jdbcType="VARCHAR" property="recvMobile" />
+    <result column="postage" jdbcType="REAL" property="postage" />
+    <result column="amout" jdbcType="REAL" property="amout" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_id, order_no, order_status, user_id, recv_name, recv_address, recv_mobile, 
+    postage, amout, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOrderNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from t_order
+    where order_no = #{orderNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="order_id" keyProperty="orderId" parameterType="com.miaosha.model.Order" useGeneratedKeys="true">
+    insert into t_order (order_no, order_status, user_id, 
+      recv_name, recv_address, recv_mobile, 
+      postage, amout, create_time
+      )
+    values (#{orderNo,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{recvName,jdbcType=VARCHAR}, #{recvAddress,jdbcType=VARCHAR}, #{recvMobile,jdbcType=VARCHAR}, 
+      #{postage,jdbcType=REAL}, #{amout,jdbcType=REAL}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="order_id" keyProperty="orderId" parameterType="com.miaosha.model.Order" useGeneratedKeys="true">
+    insert into t_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        order_no,
+      </if>
+      <if test="orderStatus != null">
+        order_status,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="recvName != null">
+        recv_name,
+      </if>
+      <if test="recvAddress != null">
+        recv_address,
+      </if>
+      <if test="recvMobile != null">
+        recv_mobile,
+      </if>
+      <if test="postage != null">
+        postage,
+      </if>
+      <if test="amout != null">
+        amout,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderNo != null">
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="recvName != null">
+        #{recvName,jdbcType=VARCHAR},
+      </if>
+      <if test="recvAddress != null">
+        #{recvAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recvMobile != null">
+        #{recvMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="postage != null">
+        #{postage,jdbcType=REAL},
+      </if>
+      <if test="amout != null">
+        #{amout,jdbcType=REAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.miaosha.model.Order">
+    update t_order
+    <set>
+      <if test="orderNo != null">
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="recvName != null">
+        recv_name = #{recvName,jdbcType=VARCHAR},
+      </if>
+      <if test="recvAddress != null">
+        recv_address = #{recvAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="recvMobile != null">
+        recv_mobile = #{recvMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="postage != null">
+        postage = #{postage,jdbcType=REAL},
+      </if>
+      <if test="amout != null">
+        amout = #{amout,jdbcType=REAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.miaosha.model.Order">
+    update t_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      recv_name = #{recvName,jdbcType=VARCHAR},
+      recv_address = #{recvAddress,jdbcType=VARCHAR},
+      recv_mobile = #{recvMobile,jdbcType=VARCHAR},
+      postage = #{postage,jdbcType=REAL},
+      amout = #{amout,jdbcType=REAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
