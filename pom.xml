@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.miaosha</groupId>
     <artifactId>miaosha</artifactId>
-    <version>1.0.0 - REALEASE</version>
+    <version>1.0.0</version>
     <name>miaosha</name>
     <description>Miaosha project for Spring Boot</description>
 
